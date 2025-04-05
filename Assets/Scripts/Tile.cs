@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using TMPro;
 using Unity.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,9 +9,7 @@ public class Tile : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI letterText;
     [SerializeField] private Image mainImage;
-    [SerializeField, ReadOnly] private TileData tileData;
-    
-    private bool isSelected;
+    [SerializeField] private TileData tileData;
 
     public void InitialiseTile(TileData tileData)
     {
@@ -33,9 +31,8 @@ public class Tile : MonoBehaviour
 
     }
 
-    public void SetSelected(bool b)
+    public void SetSelected(bool isSelected)
     {
-        isSelected = b;
         if(isSelected)
             Highlight();
         else
@@ -46,4 +43,9 @@ public class Tile : MonoBehaviour
     private void Highlight() => mainImage.color = Color.green;
 
     private void DeHighlight() => mainImage.color = Color.white;
+
+    public void DestroyTile()
+    {
+        Destroy(gameObject);
+    }
 }

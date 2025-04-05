@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     
     private InputManager m_inputManager;
     private WordValidator m_wordValidator;
+    
+    private HashSet<string> wordsAdded = new HashSet<string>();
 
     private void Start()
     {
@@ -41,12 +43,22 @@ public class GameManager : MonoBehaviour
 
     private void OnWordSubmitted(string word)
     {
-        if (m_wordValidator.IsValidWord(word))
+        if (IsValidWord(word))
         {
+            if (IsWordAdded(word))
+            {
+                Debug.Log("Word already added");
+                return;
+            }
+
             Debug.Log("Word Valid : " + word);
+            wordsAdded.Add(word);
             return;
         }
 
         Debug.Log("Word Invalid : " + word);
     }
+
+    private bool IsValidWord(string word) => m_wordValidator.IsValidWord(word);
+    private bool IsWordAdded(string word) => wordsAdded.Contains(word);
 }
