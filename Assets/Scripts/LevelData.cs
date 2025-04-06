@@ -1,18 +1,37 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-public class LevelData : MonoBehaviour
+
+[Serializable]
+public class LevelDataList
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public List<LevelData> data;
 }
+
+[Serializable]
+public class LevelData
+{
+    public int bugCount { get; set; }
+    public int wordCount { get; set; }
+    public int timeSec { get; set; }
+    public int totalScore { get; set; }
+    public GridSize gridSize { get; set; }
+    public List<GridData> gridData { get; set; }
+    public int? levelType { get; set; }
+}
+
+[Serializable]
+public class GridData
+{
+    public int tileType { get; set; }
+    public string letter { get; set; }
+}
+
+[Serializable]
+public class GridSize
+{
+    public int x { get; set; }
+    public int y { get; set; }
+}
+
+

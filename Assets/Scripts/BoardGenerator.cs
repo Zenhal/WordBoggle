@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BoardGenerator : MonoBehaviour
@@ -7,10 +8,27 @@ public class BoardGenerator : MonoBehaviour
     [SerializeField] private GameObject letterTilePrefab;
     [SerializeField] private Transform boardParent;
 
+    private List<Tile> boardTiles;
 
-    public void Init()
+    public void Init(LevelData levelData)
     {
+        if (levelData != null)
+        {
+            boardTiles = new List<Tile>();
+            rows = levelData.gridSize.x;
+            columns = levelData.gridSize.y;
+            GenerateBoard();
+            InitialiseTileData(levelData.gridData);
+        }
+    }
+
+    public void InitialiseRandomBoard(int row, int column)
+    {
+        boardTiles = new List<Tile>();
+        rows = row;
+        columns = column;
         GenerateBoard();
+        InitializeRandomData();
     }
     
     private void GenerateBoard()
@@ -35,16 +53,49 @@ public class BoardGenerator : MonoBehaviour
         GameObject tileGameObject = Instantiate(letterTilePrefab, boardParent);
         tileGameObject.transform.localPosition = position;
         var tile = tileGameObject.GetComponent<Tile>();
-        tile.InitialiseTile(GetTileData());
+        boardTiles.Add(tile);
+        //tile.InitialiseTile(GetTileData());
     }
 
-    private TileData GetTileData()
+    private void InitialiseTileData(List<GridData> gridData)
+    {
+        for (int i = 0; i < gridData.Count; i++)
+        {
+            boardTiles[i].InitialiseTile(GetTileData(gridData[i].tileType, gridData[i].letter));
+        }
+    }
+
+    private void InitializeRandomData()
+    {
+        for (int i = 0; i < boardTiles.Count; i++)
+        {
+            boardTiles[i].InitialiseTile(GetTileData(0, GetRandomLetter().ToString()));
+        }
+    }
+
+    public void SetNewTileData(List<Tile> tiles)
+    {
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            tiles[i].InitialiseTile(GetTileData(0, GetRandomLetter().ToString()));
+        }
+    }
+
+    private TileData GetTileData(int tileType, string letter)
     {
         var tileData = new TileData();
-        tileData.tileType = "0";
-        tileData.score = 1;
-        tileData.letter = GetRandomLetter();
+        tileData.tileType = tileType;
+        tileData.letter = letter;
         return tileData;
+    }
+
+    public void ClearBoard()
+    {
+        for (int i = 0; i < boardTiles.Count; i++)
+        {
+            Destroy(boardTiles[i].gameObject);
+        }
+        boardTiles.Clear();
     }
     
     private char GetRandomLetter()

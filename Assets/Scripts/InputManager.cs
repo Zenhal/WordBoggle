@@ -135,7 +135,7 @@ public class InputManager
         }
 
         var word = ConstructWordFromSelection();
-        EventHandler.Instance.OnWordSubmitted.Invoke(word);
+        EventHandler.Instance.OnWordSubmitted.Invoke(word, selectedTiles);
         ClearSelection();
     }
 
