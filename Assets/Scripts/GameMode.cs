@@ -26,7 +26,6 @@ public abstract class GameMode
     {
         currentScore = 0;
         wordsAdded.Clear();
-        //boardManager.ResetBoard();
     }
     
     //TODO: Add correct logic
@@ -35,7 +34,7 @@ public abstract class GameMode
         int length = word.Length;
 
         if (length == 3) return 10;
-        if (length <= 4) return 20;
+        if (length == 4) return 20;
         if (length == 5) return 40;
         if (length == 6) return 60;
         if (length == 7) return 90;

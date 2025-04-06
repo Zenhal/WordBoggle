@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameOverPopup : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class GameOverPopup : MonoBehaviour
 
     public void OnQuitButtonClicked()
     {
-        Application.Quit();
+        SceneManager.LoadScene(0);
     }
 
     public void OnNextLevelButtonClicked()

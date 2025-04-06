@@ -11,6 +11,14 @@ public class Tile : MonoBehaviour
     [SerializeField] private Image mainImage;
     [SerializeField] private TileData tileData;
 
+    public int x { get; private set; } //row
+    public int y { get; private set; } //column
+
+    public void SetRowColumn(int row, int column)
+    {
+        x = row;
+        y = column;
+    }
     public void InitialiseTile(TileData tileData)
     {
         this.tileData = tileData;

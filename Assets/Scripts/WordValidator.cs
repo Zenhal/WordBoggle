@@ -6,7 +6,7 @@ public class WordValidator
 {
     private HashSet<string> validWords = new HashSet<string>();
 
-    private static string DICTIONARY_FILE_PATH = "Assets/Resources/wordlist.txt";
+    private static string DICTIONARY_FILE_NAME = "wordlist";
 
     public WordValidator()
     {
@@ -15,7 +15,8 @@ public class WordValidator
 
     private void LoadDictionary()
     {
-        string[] words = File.ReadAllLines(DICTIONARY_FILE_PATH);
+        var wordFile = Resources.Load<TextAsset>(DICTIONARY_FILE_NAME);
+        string[] words = wordFile.text.Split(new[] { '\n', '\r' }, System.StringSplitOptions.RemoveEmptyEntries);
         foreach (string word in words)
         {
             validWords.Add(word.ToUpper());

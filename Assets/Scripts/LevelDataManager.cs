@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 public class LevelDataManager
 {
     private LevelDataList levelDataList;
-    private static string LEVELDATA_FILE_PATH = "Assets/Resources/levelData.json";
+    private static string LEVELDATA_FILE_NAME = "levelData";
 
     public LevelDataManager()
     {
@@ -13,8 +13,8 @@ public class LevelDataManager
     }
     private void LoadLevelData()
     {
-        var text = File.ReadAllText(LEVELDATA_FILE_PATH);
-        levelDataList = JsonConvert.DeserializeObject<LevelDataList>(text);
+        TextAsset jsonFile = Resources.Load<TextAsset>(LEVELDATA_FILE_NAME);
+        levelDataList = JsonConvert.DeserializeObject<LevelDataList>(jsonFile.text);
         Debug.Log("Level Data : " + levelDataList.data.Count);
     }
     

@@ -27,6 +27,7 @@ public class InputHandler : MonoBehaviour
     protected virtual void HandleInput()
     {
 
+#if UNITY_EDITOR || UNITY_STANDALONE
         if (Input.GetMouseButtonDown(0))
         {
             OnPointerDown(Input.mousePosition);
@@ -41,6 +42,29 @@ public class InputHandler : MonoBehaviour
         {
             OnPointerUp(Input.mousePosition);
         }
+#else
+
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+            Vector2 touchPosition = touch.position;
+
+            switch (touch.phase)
+            {
+                case TouchPhase.Began:
+                    OnPointerDown(touchPosition);
+                    break;
+                case TouchPhase.Moved:
+                case TouchPhase.Stationary:
+                    OnPointerDrag(touchPosition);
+                    break;
+                case TouchPhase.Ended:
+                case TouchPhase.Canceled:
+                    OnPointerUp(touchPosition);
+                    break;
+            }
+        }
+#endif
     }
 
     protected virtual void OnPointerDown(Vector2 position)

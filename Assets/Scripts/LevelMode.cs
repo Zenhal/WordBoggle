@@ -5,11 +5,7 @@ using UnityEngine;
 public class LevelMode : GameMode
 {
     private LevelObjective currentObjective;
-    
-    private int currentScore = 0;
-
     private GameTimer gameTimer;
-
     
     public override void InitializeGame(LevelData levelData)
     {

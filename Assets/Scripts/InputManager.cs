@@ -15,7 +15,7 @@ public class InputManager
 
     ~InputManager()
     {
-        OnDestroy();
+        RemoveInputListeners();
     }
     
      private void AddInputListeners()
@@ -89,15 +89,11 @@ public class InputManager
     private bool IsValidNextTile(Tile currentTile, Tile nextTile)
     {
         if (currentTile == null || nextTile == null) return false;
+        
+        int rowDiff = Mathf.Abs(currentTile.x - nextTile.x);
+        int colDiff = Mathf.Abs(currentTile.y - nextTile.y);
 
-        return true;
-        /*
-        Vector2Int currentPos = boardManager.GetTilePosition(currentTile);
-        Vector2Int nextPos = boardManager.GetTilePosition(nextTile);
-
-        return Mathf.Abs(currentPos.x - nextPos.x) <= 1 &&
-               Mathf.Abs(currentPos.y - nextPos.y) <= 1;
-               */
+        return (rowDiff + colDiff) == 1;
     }
 
     private void AddTileToSelection(Tile tile)
@@ -166,10 +162,5 @@ public class InputManager
         m_inputHandler.OnPointerUpEvent -= HandlePointerUp;
         m_inputHandler.OnDoubleClickEvent -= HandleDoubleClick;
     }
-
-    //Remove event listeners
-    private void OnDestroy()
-    {
-       RemoveInputListeners();
-    }
+    
 }

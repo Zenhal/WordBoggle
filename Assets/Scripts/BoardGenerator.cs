@@ -12,21 +12,24 @@ public class BoardGenerator : MonoBehaviour
 
     public void Init(LevelData levelData)
     {
-        if (levelData != null)
-        {
-            boardTiles = new List<Tile>();
-            rows = levelData.gridSize.x;
-            columns = levelData.gridSize.y;
-            GenerateBoard();
-            InitialiseTileData(levelData.gridData);
-        }
+        if (levelData == null) return;
+        
+        boardTiles = new List<Tile>();
+        SetGridSize(levelData.gridSize.x, levelData.gridSize.y);
+        GenerateBoard();
+        InitialiseTileData(levelData.gridData);
+    }
+
+    private void SetGridSize(int row, int column)
+    {
+        rows = row;
+        columns = column;
     }
 
     public void InitialiseRandomBoard(int row, int column)
     {
         boardTiles = new List<Tile>();
-        rows = row;
-        columns = column;
+        SetGridSize(row, column);
         GenerateBoard();
         InitializeRandomData();
     }
@@ -43,18 +46,18 @@ public class BoardGenerator : MonoBehaviour
             for (int j = 0; j < columns; j++)
             {
                 Vector2 position = new Vector2(startPosition.x + j * tileSize, startPosition.y - i * tileSize);
-                SpawnTile(position);
+                SpawnTile(i, j, position);
             }
         }
     }
 
-    private void SpawnTile(Vector2 position)
+    private void SpawnTile(int row, int column, Vector2 position)
     {
         GameObject tileGameObject = Instantiate(letterTilePrefab, boardParent);
         tileGameObject.transform.localPosition = position;
         var tile = tileGameObject.GetComponent<Tile>();
+        tile.SetRowColumn(row, column);
         boardTiles.Add(tile);
-        //tile.InitialiseTile(GetTileData());
     }
 
     private void InitialiseTileData(List<GridData> gridData)
