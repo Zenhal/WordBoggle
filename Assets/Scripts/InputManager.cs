@@ -93,7 +93,7 @@ public class InputManager
         int rowDiff = Mathf.Abs(currentTile.x - nextTile.x);
         int colDiff = Mathf.Abs(currentTile.y - nextTile.y);
 
-        return (rowDiff + colDiff) == 1;
+        return (rowDiff <= 1 && colDiff <= 1) && !(currentTile.x == nextTile.x && currentTile.y == nextTile.y);
     }
 
     private void AddTileToSelection(Tile tile)

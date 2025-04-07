@@ -44,6 +44,7 @@ public class UIManager : MonoBehaviour
 
     private void OnObjectiveInitialised(LevelObjective objective)
     {
+        Reset();
         levelObjective = objective;
         switch (levelObjective.type)
         {
@@ -60,6 +61,13 @@ public class UIManager : MonoBehaviour
             default:
                 break;
         }
+        
+    }
+
+    private void Reset()
+    {
+        objectiveScore = string.Empty;
+        objectiveWordCount  = string.Empty;
         UpdateScore(0);
         UpdateWordCount(0);
     }

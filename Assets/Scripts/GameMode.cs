@@ -29,7 +29,7 @@ public abstract class GameMode
     }
     
     //TODO: Add correct logic
-    public virtual int CalculateScore(string word)
+    protected virtual int CalculateScore(string word)
     {
         int length = word.Length;
 
